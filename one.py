@@ -7,3 +7,8 @@ elif a=='Bad':
     print(f'I am sorry to hear that {inp}')
 else:
     print('I could not understand')
+b=input('Are you happy today. Yes/No: ')
+if b=='Yes':
+    print('Good to hear')
+elif b=='No':
+    print('I am sorry to hear that')
