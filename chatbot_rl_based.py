@@ -15,6 +15,10 @@ def packing_det(n):
     print('you can take chargers/adapters')
     print('take cloths also')
     print('have a great trip!!!')
+def transportation():
+    print('you can go by a airplane the ticket will cost 50000 Rupees')
+    print('You can book ticket from the website')
+    print('have a great trip!!!')
 def reccomend():
     print('Tell where you want to go beaches,cities or mountains')
     inp1=input('where you want to go:')
@@ -27,14 +31,15 @@ def reccomend():
     else:
         print('repeat pls')
         reccomend()
-    inp=input('which of these you choose')
+    inp=input('which of these you choose:')
     if inp in destinations[inp1]:
         print(f'{inp} oh nice choice!')
     else:
         print('its not there unfortunately')
         reccomend()
-    inp2=input('how many days you are going for')
+    inp2=input('how many days you are going for:')
     packing_det(inp2)
+    transportation()
 def main():
     inp=input('whats your preference:')
     if 'reccomend' in inp:
