@@ -6,7 +6,6 @@ board=[
     [0,0,0],
     [0,0,0]
 ]
-
 def print_board():
     board1=f'{board[0][0]} | {board[0][1]} | {board[0][2]}\n'
     sep1='---------\n'
@@ -34,14 +33,17 @@ def player_turn(choice):
     else:
         player_turn()
 def bot_turn(board):
-    empties=[]
+    choice_col=[]
+    choice_row=[]
     for i in range(0,len(board)):
         for j in range(0,len(board)):
-            if board[i][j]=='X':
-                print('not empty')
+            if board[i][j]=='X' or board[i][j]=='O':
+                pass
             else:
-                print(f'{i,j} empty')
-    return empties
+                choice_col.append(i)
+                choice_row.append(j)
+    print(random.choices(choice_col))
+    print(random.choices(choice_row))
 abc=choice()
 print(player_turn(abc))
 print(bot_turn(board))
