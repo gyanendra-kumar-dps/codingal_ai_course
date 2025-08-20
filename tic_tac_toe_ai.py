@@ -19,31 +19,71 @@ def choice():
         return chce.upper()
     elif chce.upper()=='O':
         return chce.upper()
+    elif chce.upper()=='EXIT':
+        exit()
     else:
         print(f'{Fore.RED}Please enter only X/O')
         choice()
 def player_turn(choice):
     col=input(f'{Fore.BLUE}Enter coulumn:')
     row=input(f'{Fore.BLUE}Enter row:')
-    if col.isdigit() and len(col)==1 and int(col)<=3 and row.isdigit() and len(row)==1 and int(row)<=3:
+    for i in range(0,len(board)):
+        for j in range(0,i):
+            if board[i][j]=='X' or board[i][j]=='O':
+                player_turn(choice)
+    if col.isdigit() and len(col)==1 and int(col)<=3 and int(col)>0 and row.isdigit() and len(row)==1 and int(row)<=3 and int(row)>0:
         print(f'{Fore.GREEN}valid statement')
-        board[int(col)][int(row)]=choice
-        print(print_board())
-        return [col,row]
+        board[int(col)-1][int(row)-1]=choice
+        return [int(col)-1,int(row)-1]
     else:
         player_turn()
-def bot_turn(board):
+def is_won(bd,choice):
+    if (bd[0][0] and bd[0][1] and bd[0][2])==choice:
+        return True
+    elif (bd[1][0] and bd[1][1] and bd[1][2])==choice:
+        return True
+    elif (bd[2][0] and bd[2][1] and bd[2][2])==choice:
+        return True
+    elif (bd[0][0] and bd[1][1] and bd[2][2])==choice:
+        return True
+    elif (bd[0][2] and bd[1][1] and bd[2][0])==choice:
+        return True
+    elif (bd[0][0] and bd[1][0] and bd[2][0])==choice:
+        return True
+    elif (bd[0][1] and bd[1][1] and bd[2][1])==choice:
+        return True
+    elif (bd[0][2] and bd[1][2] and bd[2][2])==choice:
+        return True
+    return False
+def is_winning(chce):
+    abc=board.copy()
+    for i in range(len(board)):
+        for j in range(i):
+            abc[i][j]==chce
+            print(is_won(board,chce))
+            if is_won(board,chce):
+                return [i,j]
+def bot_turn(bd,player):
     choice_col=[]
     choice_row=[]
-    for i in range(0,len(board)):
-        for j in range(0,len(board)):
-            if board[i][j]=='X' or board[i][j]=='O':
+    for i in range(0,len(bd)):
+        for j in range(0,len(bd)):
+            if bd[i][j]=='X' or bd[i][j]=='O':
                 pass
             else:
                 choice_col.append(i)
                 choice_row.append(j)
-    print(random.choices(choice_col))
-    print(random.choices(choice_row))
+    row=random.choices(choice_col)
+    col=random.choices(choice_row)
+    bt=''
+    if player=='X':
+        bt='O'
+    elif player=='O':
+        bt='X'
+    board[col[0]][row[0]]=bt
+    print(is_winning(player))
+    return print_board()
 abc=choice()
-print(player_turn(abc))
-print(bot_turn(board))
+while True:
+    print(player_turn(abc))
+    print(bot_turn(board,abc))
