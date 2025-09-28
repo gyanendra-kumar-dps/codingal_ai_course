@@ -13,9 +13,9 @@ def filtered_img(tp):
         f_image[:,:,1]=0
         f_image[:,:,2]=0
     elif tp=="inc_blue":
-        f_image[:,:,0]=cv2.add(f_image[:,:,0], 50)
+        f_image[:,:,0]=cv2.add(f_image[:,:,0],50)
     elif tp=="dec_green":
-        f_image[:,:,1]=cv2.subtract(f_image,f_image[:,:,1],50)
+        f_image[:,:,2]=cv2.subtract(f_image[:,:,2],50)
     return f_image
 if image is None:
     print('error!!')
@@ -33,4 +33,4 @@ else:
         elif key==ord('w'):
             f_img=filtered_img('inc_blue')
         elif key==ord('s'):
-            f_img=filtered_img('dec_red')
+            f_img=filtered_img('dec_green')
