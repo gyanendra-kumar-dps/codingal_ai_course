@@ -20,18 +20,21 @@ def filter(image,type):
     elif type=='c':
         canny=cv2.Canny(f_img,100,300)
         f_img=canny
+    else:
+        pass
     return f_img
+rtype=''
 while True:
     r,cap=camera.read()
-    cv2.imshow('win',cap)
+    cv2.imshow('win',filter(cap,rtype))
     key=cv2.waitKey(1)&0b11111111
     if key==ord('r'):
-        cap=filter(cap,'r')
+        rtype='r'
     if key==ord('g'):
-        cap=filter(cap,'g')
-    if key==ord('g'):
-        cap=filter(cap,'b')
+        rtype='g'
+    if key==ord('b'):
+        rtype='b'
     if key==ord('s'):
-        cap=filter(cap,'s')
+        rtype='s'
     if key==ord('c'):
-        cap=filter(cap,'c')
+        rtype='c'
