@@ -105,3 +105,5 @@ while True:
             capture=False
             cv2.imshow('win',cap)
             cv2.waitKey(1)
+
+            
