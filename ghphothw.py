@@ -19,7 +19,7 @@ def get_filter(image,filter_type):
         sepia_filter=np.array([[0.272, 0.534, 0.131],[0.349, 0.686, 0.168],[0.393, 0.769, 0.189]])
         return np.clip(cv2.transform(image,sepia_filter),0,255).astype('uint8')
     elif filter_type=='blur':
-        return cv2.GaussianBlur(image,(15,15))
+        return cv2.GaussianBlur(image,(15,15),sigmaX=1)
     elif filter_type=='grayscale':
         return cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
     return image
@@ -60,7 +60,6 @@ while True:
                     current_filter = (current_filter + 1) % len(FILTERS)
                     last_action_time = current_time
                     print("Filter changed to:", FILTERS[current_filter] or "None")
-                break 
     filtered_img = get_filter(cap, FILTERS[current_filter])
     display_img = cv2.cvtColor(filtered_img, cv2.COLOR_GRAY2BGR) if FILTERS[current_filter]=='GRAYSCALE' else filtered_img
     if capture_request:
