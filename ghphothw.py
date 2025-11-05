@@ -6,7 +6,7 @@ cam=cv2.VideoCapture(0)
 hand_lib=mp.solutions.hands
 hand_obj=hand_lib.Hands(min_detection_confidence=0.7)
 drawing_utils=mp.solutions.drawing_utils
-FILTERS=[None,'negative','sepia','blur','grayscale']
+FILTERS=[None,'negative','sepia','blur','grayscale','sobel','laplacian','scharr']
 current_filter=0
 DEBOUNCE=1
 pinch=False
@@ -22,6 +22,17 @@ def get_filter(image,filter_type):
         return cv2.GaussianBlur(image,(15,15),sigmaX=1)
     elif filter_type=='grayscale':
         return cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+    elif filter_type=='sobel':
+        sobelx=cv2.Sobel(image,cv2.CV_64F,1,0,ksize=3)
+        sobely=cv2.Sobel(image,cv2.CV_64F,0,1,ksize=3)
+        sobelxy=cv2.bitwise_or(sobelx.astype('uint8'),sobely.astype('uint8'))
+        return sobelxy
+    elif filter_type=='laplacian':
+        lap=cv2.Laplacian(image,cv2.CV_64F)
+        return lap
+    elif filter_type=='scharr':
+        scharr=cv2.Scharr(image,cv2.CV_64F,1,0)
+        return scharr
     return image
 while True:
     _,cap=cam.read()
@@ -58,6 +69,7 @@ while True:
                 last_action_time=0
                 if current_time - last_action_time > 1:
                     current_filter = (current_filter + 1) % len(FILTERS)
+                    capture=True
                     last_action_time = current_time
                     print("Filter changed to:", FILTERS[current_filter] or "None")
     filtered_img = get_filter(cap, FILTERS[current_filter])
