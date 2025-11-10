@@ -37,6 +37,6 @@ def quiz():
         except:
             pass
         count+=1
-    print(score)
+    print(f'{score}/5')
     print(f'percentage:-{score/count*100:.1f}')
 quiz()
