@@ -1,12 +1,34 @@
 import requests
 import html
-categ=input('Enter a category(0-9):')
-url=f'https://opentdb.com/api.php?amount=5&type=multiple&category={int(categ)}'
+category={
+    'General Knowledge':9,
+    'Science & Nature':17,
+    'Science: Computers':18,
+    'Science: Mathematics':19,
+    'Science: Gadgets':29,
+    'Entertainment: Cartoon & Animations':30
+}
+for i,j in category.items():
+    print(f'{i}:-{j}')
+try:
+    category=int(input('Enter a category code(18,30,19,17,29,9):'))
+    difficulty=input('Enter difficulty mode(easy,medium,hard):')
+    ques=int(input('Enter no of questions:'))
+except:
+    print('error enter a valid value')
+try:
+    url=f'https://opentdb.com/api.php?amount={ques}&type=multiple&difficulty={difficulty}&category={category}'
+except:
+    print('error enter a valid url param')
 def get_data():
-    data=requests.get(url)
-    json_data=data.json()
-    if data.status_code==200:
-        return json_data['results']
+    try:
+        data=requests.get(url)
+        json_data=data.json()
+        if data.status_code==200:
+            return json_data['results']
+    except:
+        print('invalid url')
+        exit(-1)
 def quiz():
     data=get_data()
     options=[]
@@ -20,7 +42,7 @@ def quiz():
     count=0
     score=0
     while True:
-        if count==5:
+        if count==ques:
             break
         print(f"Question:- {questions[count]}")
         for idx,i in enumerate(options[count]):
@@ -35,6 +57,9 @@ def quiz():
         except:
             pass
         count+=1
-    print(f'{score/10}/5')
-    print(f'percentage:-{score/10/len(questions)*100:.1f}')
+    if len(questions):
+        print(f'{score/10}/{ques}')
+        print(f'percentage:-{(score/10)/len(questions)*100:.1f}')
+    else:
+        print('no of questions should be 1+')
 quiz()
