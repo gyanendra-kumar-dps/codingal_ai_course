@@ -1,6 +1,7 @@
 import requests
 import html
-url='https://opentdb.com/api.php?amount=5&type=multiple&category=8'
+categ=input('Enter a category(0-9):')
+url=f'https://opentdb.com/api.php?amount=5&type=multiple&category={int(categ)}'
 def get_data():
     data=requests.get(url)
     json_data=data.json()
