@@ -1,6 +1,6 @@
 import requests
 import html
-url='https://opentdb.com/api.php?amount=5&type=multiple&category=9'
+url='https://opentdb.com/api.php?amount=5&type=multiple&category=8'
 def get_data():
     data=requests.get(url)
     json_data=data.json()
@@ -35,5 +35,5 @@ def quiz():
             pass
         count+=1
     print(f'{score/10}/5')
-    print(f'percentage:-{score/len(count)*100:.1f}')
+    print(f'percentage:-{score/10/len(questions)*100:.1f}')
 quiz()
