@@ -1,5 +1,4 @@
 import requests
-
 def get_random_facts():
     res=requests.get('https://uselessfacts.jsph.pl/random.json?language=en')
     status_code=res.status_code

@@ -58,8 +58,8 @@ def quiz():
             pass
         count+=1
     if len(questions):
-        print(f'{score/10}/{ques}')
-        print(f'percentage:-{(score/10)/len(questions)*100:.1f}')
+        print(f'{score//10}/{ques}')
+        print(f'percentage:- {(score/10/len(questions))*100:.1f}')
     else:
         print('no of questions should be 1+')
 quiz()
