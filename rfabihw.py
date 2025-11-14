@@ -16,3 +16,6 @@ while True:
     if inp=='q' or inp=='Q':
         exit()
     print(get_random_facts(typeof.lower()))
+    if typeof.lower()=='today':
+        print("That's it for today")
+        exit()
