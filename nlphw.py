@@ -1,17 +1,12 @@
-import requests
 from config import api_key
-API_URL = "https://router.huggingface.co/hf-inference/models/tabularisai/multilingual-sentiment-analysis"
-headers = {
-    "Authorization": f"Bearer {api_key}",
-}
-def query(payload):
-    response = requests.post(API_URL, headers=headers, json=payload)
-    return response.json()
+import requests
+url="https://router.huggingface.co/hf-inference/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english"
+header={'Authorization':f'Bearer {api_key}'}
+def get_data(text):
+    res=requests.post(url,headers=header,json={'inputs':text})
+    return res.json()
 while True:
-    inp=input('Enter a sentence for analysis:')
-    output = query({
-        "inputs": f"{inp}",
-    })
-    for i in output[0]:
-        print(f"{i['label']}:- {i['score']*100:.4f}%")
-#https://huggingface.co/classla/multilingual-IPTC-news-topic-classifier
+    inp=input("Enter a sentence for analysis:")
+    data=get_data(inp)
+    print(f"{data[0][0]['label']}:- {data[0][0]['score']*100:.4f}%")
+    print(f"{data[0][1]['label']}:- {get_data(inp)[0][1]['score']*100:.4f}%")
