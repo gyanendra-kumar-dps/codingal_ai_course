@@ -1,4 +1,4 @@
-from colorama import init,Fore
+from colorama import Fore
 import requests
 from config import api_key
 def query(payload,modelname):
@@ -6,12 +6,12 @@ def query(payload,modelname):
     res=requests.post(f"https://router.huggingface.co/hf-inference/models/{modelname}",headers=header,json=payload)
     return res.json()
 def summary_of_text(text,minl,maxl,modelname="google/pegasus-xsum"):
-    payload={
+    payl={
         "inputs":text,
         "parameters":{"min_length":int(minl),"max_length":int(maxl)}
     }
     print(Fore.BLUE+f"Performing summary using ai model {modelname}")
-    res=query(payload,modelname)
+    res=query(payl,modelname)
     print(Fore.BLUE+"Your summary creation is done")
     return res
 if __name__=="__main__":
